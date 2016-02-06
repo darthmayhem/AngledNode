@@ -1,35 +1,71 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-  </head>
-  <body data-ng-controller="mainController">
-    <img src="images/icons/ms-icon-150x150.png"/>
+    <% include partials/_head %>
+</head>
+<body data-ng-controller="mainController">
+    <nav class="navbar navbar-default hidden-xs hidden-sm">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#/home">Home</a></li>
+                        <li><a href="#/dead">Dead Link</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <h1><%= title %></h1>
+    <nav class="navbar navbar-default hidden-md hidden-lg">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                               aria-expanded="false">Menu <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="active"><a href="#/home">Home</a></li>
+                                <li><a href="#/dead">Dead Link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <p>Welcome to <%= title %>, an experiment in Node.js mixed with AngularJS.</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="images/icons/ms-icon-150x150.png"/>
+            </div>
 
-    <div data-ng-view=""></div>
+            <div class="col-md-10">
+                <div style="text-align:right">
+                    <h1><%= title %></h1>
+                </div>
+
+                <div class="well">
+                    <p>welcome to <%= title %>, an freedom experiment in Node.js mixed with AngularJS.</p>
+                    <p>this is my playground. enjoy the ride.</p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">angularJS view</div>
+
+                    <div class="panel-body" data-ng-view=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="/javascripts/components/requirejs/require.js" data-main="/javascripts/app/modules/main.js"></script>
-  </body>
+</body>
 </html>
