@@ -6,9 +6,11 @@
 </head>
 
 <body>
-    <img src="images/icons/ms-icon-150x150.png"/>
-    <h1>These are not the droids you're looking for...</h1>
-    <h2><i class="fa fa-exclamation-triangle"></i> <%= message %> (<%= error.status %>)</h2>
-    <pre><%= error.stack %></pre>
+    <div style="padding:50px">
+        <img src="images/icons/ms-icon-150x150.png"/>
+        <h1>These are not the droids you're looking for...</h1>
+        <h2><i class="fa fa-exclamation-triangle"></i> <%= message %> (<%= error.status %>)</h2>
+        <pre><%= error.stack %></pre>
+    </div>
 </body>
 </html>

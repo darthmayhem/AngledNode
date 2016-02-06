@@ -8,6 +8,7 @@ define(['core/runners/logRunner'], function(logRunner) {
 		$routeProvider
 			.when('/', { controller: 'homeController', templateUrl: '/views/home.html' })
 			.when('/home', { controller: 'homeController', templateUrl: '/views/home.html' })
+            .when('/contact', { controller: 'contactController', templateUrl: '/views/contact.html' })
 	}]);
 	
 	require(['core/controllerReferences'], function(references) {
