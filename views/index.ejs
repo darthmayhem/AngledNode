@@ -21,9 +21,13 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
   </head>
-  <body>
+  <body data-ng-controller="mainController">
     <img src="images/icons/ms-icon-150x150.png"/>
+
     <h1><%= title %></h1>
+
     <p>Welcome to <%= title %>, an experiment in Node.js mixed with AngularJS.</p>
+
+    <script src="/javascripts/components/requirejs/require.js" data-main="/javascripts/app/modules/main.js"></script>
   </body>
 </html>
