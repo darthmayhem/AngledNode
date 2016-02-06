@@ -9,6 +9,7 @@ define(['core/runners/logRunner'], function(logRunner) {
 			.when('/', { controller: 'homeController', templateUrl: '/views/home.html' })
 			.when('/home', { controller: 'homeController', templateUrl: '/views/home.html' })
             .when('/contact', { controller: 'contactController', templateUrl: '/views/contact.html' })
+            .when('/login', { controller: 'contactController', templateUrl: '/views/login.html' })
 	}]);
 	
 	require(['core/controllerReferences'], function(references) {
