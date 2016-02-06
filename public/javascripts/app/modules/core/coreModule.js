@@ -13,6 +13,7 @@ define(['core/runners/logRunner'], function(logRunner) {
 	require(['core/controllerReferences'], function(references) {
 		require(references, function() {
 			angular.bootstrap(document, ['coreModule']);
+            global.appName = 'angled.Node';
 		});
 	});
 });
