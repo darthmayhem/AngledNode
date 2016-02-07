@@ -51,10 +51,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-<<<<<<< HEAD
-# mongodb ignores
-/data/
-=======
 # MongoDB
 data/
->>>>>>> master
+
+# node modules
+node_modules/
