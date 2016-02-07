@@ -1,0 +1,1 @@
+F:\mongodb-win32-x86_64-2008plus-3.2.1\bin\mongod.exe --dbpath f:\git\anglednode\data
