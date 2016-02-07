@@ -98,8 +98,8 @@ var assert = require('assert');
 var url = 'mongodb://localhost:27017/test';
 
 MongoClient.connect(url, function (err, db) {
-  assert(null, err);
-  console.log('connected to mongodb: ' + url);
+  assert.equal(null, err);
+  debug('connected to mongodb: ' + url);
   db.close();
 })
 
