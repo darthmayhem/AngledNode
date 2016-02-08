@@ -50,13 +50,38 @@ router.get('/login', function (req, res) {
   res.render('login', {
     title: config.name,
     version: config.version,
-    user: req.user
+    user: req.user,
+    err: req.err
   });
 });
 
-router.post('/login', passport.authenticate('local'), function (req, res) {
-  logger.log('info', 'authenticate user: ' + req.body.username + ' logged in');
-  res.redirect('/');
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function (err, user) {
+    if (err) {
+      logger.log('error', 'authentication error: ' + err.message);
+      return res.render('login', {
+        title: config.name,
+        version: config.version,
+        user: user,
+        err: err
+      });
+    }
+
+    if (!user){
+      err = {message: "invalid username/password combination"};
+
+      logger.log('error', 'authentication error: ' + err.message);
+      return res.render('login', {
+        title: config.name,
+        version: config.version,
+        user: user,
+        err: err
+      });
+    }
+
+    logger.log('info', 'authenticate user: ' + user.username + ' logged in');
+    res.redirect('/');
+  })(req, res, next);
 });
 
 router.get('/logout', function (req, res) {

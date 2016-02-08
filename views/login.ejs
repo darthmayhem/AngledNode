@@ -11,6 +11,10 @@
     <div class="container" id="appContainer">
         <h1>login.Node</h1>
 
+        <%if (err !== undefined) { %>
+        <% include partials/_error %>
+        <% } %>
+
         <div class="well">
             <div class="row">
                 <div class="col-md-12">
@@ -36,7 +40,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" name="submitContact" class="btn btn-default">let me in...</button>
-                                <span style="padding: 0 20px 0 20px">or... <a href="/register">register</a></span>
+                                <span style="padding: 0 20px 0 20px">or <a href="/register">register</a>...</span>
                             </div>
                         </div>
                     </form>
