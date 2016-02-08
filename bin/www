@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('AngledNode:server');
+var logger = require('./logger');
 var http = require('http');
 
 /**
@@ -65,11 +65,11 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      logger.log('error', bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      logger.log('error', bind + ' is already in use');
       process.exit(1);
       break;
     default:
@@ -86,20 +86,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  logger.log('info', 'Listening on ' + bind);
 }
-
-/**
- *  Mongodb connection test
- */
-
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-var url = 'mongodb://localhost:27017/test';
-
-MongoClient.connect(url, function (err, db) {
-  assert.equal(null, err);
-  debug('connected to mongodb: ' + url);
-  db.close();
-})
-

@@ -56,3 +56,6 @@ data/
 
 # node modules
 node_modules/
+
+# local logs
+logs/

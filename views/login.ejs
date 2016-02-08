@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %> (v<%= version %>)</title>
+    <% include partials/_head %>
+</head>
+
+<body>
+    <% include partials/_header %>
+
+    <div class="container" id="appContainer">
+        <h1>login.Node</h1>
+
+        <div class="well">
+            <div class="row">
+                <div class="col-md-12">
+                    <form role="form" action="/login" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="username">username</label>
+                                    <input type="text" class="form-control" name="username" placeholder="enter your username..." />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password">password</label>
+                                    <input type="password" class="form-control" name="password" placeholder="and your password..." />
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" name="submitContact" class="btn btn-default">let me in...</button>
+                                <span style="padding: 0 20px 0 20px">or... <a href="/register">register</a></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include partials/_footer %>
+</body>
+</html>
