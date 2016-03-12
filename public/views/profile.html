@@ -1,0 +1,33 @@
+<h1>{{ title }}</h1>
+
+<div class="well">
+    <div>
+        <form>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="username">user.name</label>
+                        <input type="text" class="form-control" id="username" ng-model="username" placeholder="enter your username..." />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstname">first.name</label>
+                        <input type="text" class="form-control" id="firstname" ng-model="firstname" placeholder="enter your first name..." />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">last.name</label>
+                        <input type="text" class="form-control" id="lastname" ng-model="lastname" placeholder="enter your last name..." />
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" name="submitContact" class="btn btn-default">save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<h1>{{ title }}</h1>
+
+<div class="well">
+    <div class="row">
+        <div class="col-md-12">
+            <form role="form" ng-submit="register()">
+                <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="username">username</label>
+                            <input type="text" class="form-control" id="username" ng-model="registerForm.username" placeholder="enter your username..." />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">password</label>
+                            <input type="password" class="form-control" id="password" ng-model="registerForm.password" placeholder="and your password..." />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="email">email</label>
+                            <input type="email" class="form-control" ng-model="registerForm.email" id="email" placeholder="enter your email..." />
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" name="submitContact" class="btn btn-default" ng-disabled="disabled">sign me up...</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

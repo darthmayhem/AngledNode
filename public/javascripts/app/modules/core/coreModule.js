@@ -1,7 +1,8 @@
 
 
 define(['core/runners/logRunner'], function(logRunner) {
-	var coreModule = angular.module('coreModule', ['ngRoute', 'themeModule']);
+	var coreModule = angular.module('coreModule', ['ngRoute', 'authModule', 'themeModule']);
+
 	coreModule.run(logRunner);
 	
 	coreModule.config(['$routeProvider', function($routeProvider){
@@ -9,7 +10,10 @@ define(['core/runners/logRunner'], function(logRunner) {
 			.when('/', { controller: 'homeController', templateUrl: '/views/home.html' })
 			.when('/home', { controller: 'homeController', templateUrl: '/views/home.html' })
             .when('/contact', { controller: 'contactController', templateUrl: '/views/contact.html' })
-            .when('/login', { controller: 'loginController', templateUrl: '/views/login.html' })
+            .when('/profile', { controller: 'profileController', templateUrl: '/views/profile.html' })
+			.when('/login', { controller: 'registerController', templateUrl: '/views/login.html' })
+			.when('/register', { controller: 'registerController', templateUrl: '/views/register.html' })
+			.otherwise({redirectTo: '/'})
 	}]);
 	
 	require(['core/controllerReferences'], function(references) {

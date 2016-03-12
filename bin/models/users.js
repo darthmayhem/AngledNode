@@ -11,6 +11,7 @@ var User = new Schema({
     id : ObjectId,
     username : String,
     password : String,
+    email: String,
     created : Date,
     updated : Date
 });

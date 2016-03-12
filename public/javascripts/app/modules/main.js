@@ -10,6 +10,7 @@ require.config({
 		
 		//load modules
 		'coreModule': 'core/coreModule',
+		'authModule': 'core/services/authModule',
 		'themeModule':  'theme/themeModule'
 	},
 	
@@ -19,7 +20,8 @@ require.config({
 		'angular-route': { deps: [ 'angular' ] },
 		
 		'themeModule': { deps: [ 'angular' ] },
-		'coreModule': { deps: [ 'angular-route', 'themeModule' ] }
+		'authModule': { deps: [ 'angular' ] },
+		'coreModule': { deps: [ 'angular-route', 'themeModule', 'authModule' ] }
 	}
 });
 

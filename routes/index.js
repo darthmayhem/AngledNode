@@ -18,6 +18,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
+/*
 router.get('/register', function (req, res) {
   res.render('register', {
     title: config.name,
@@ -26,22 +27,26 @@ router.get('/register', function (req, res) {
     err: req.err
   });
 });
+*/
 
 router.post('/register', function (req, res) {
-  mongoose.Users.register(new mongoose.Users({username: req.body.username}), req.body.password, function (err, user) {
+  logger.log('info', req);
+
+  mongoose.Users.register(new mongoose.Users({username: req.body.username, email: req.body.email}), req.body.password, function (err, user) {
     if (err) {
       logger.log('error', 'register user error: ' + err.message);
-      return res.render('register', {
-        title: config.name,
-        version: config.version,
-        user: req.user,
-        err: err});
+      return res.status(500).json({
+        err: err
+      });
     }
 
     logger.log('info', 'register user: ' + req.body.username + ' registered');
     passport.authenticate('local')(req, res, function () {
       logger.log('info', 'authenticate user: ' + req.body.username + ' logged in');
-      res.redirect('/');
+
+      return res.status(200).json({
+        status: 'Registration successful!'
+      });
     });
   });
 });
@@ -58,7 +63,7 @@ router.get('/login', function (req, res) {
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function (err, user) {
     if (err) {
-      logger.log('error', 'authentication error: ' + err.message);
+      logger.log('error', 'login authentication error: ' + err.message);
       return res.render('login', {
         title: config.name,
         version: config.version,
@@ -70,7 +75,7 @@ router.post('/login', function(req, res, next) {
     if (!user){
       err = {message: "invalid username/password combination"};
 
-      logger.log('error', 'authentication error: ' + err.message);
+      logger.log('error', 'login authentication error: ' + err.message);
       return res.render('login', {
         title: config.name,
         version: config.version,
@@ -79,8 +84,8 @@ router.post('/login', function(req, res, next) {
       });
     }
 
-    logger.log('info', 'authenticate user: ' + user.username + ' logged in');
-    res.redirect('/');
+    logger.log('info', 'login authenticate user: ' + user.username + ' logged in');
+    res.redirect('/#/Profile');
   })(req, res, next);
 });
 
