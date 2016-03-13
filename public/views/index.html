@@ -1,0 +1,15 @@
+<div ng-include="'views/partials/_header.html'"></div>
+
+<div class="container" id="appContainer">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-include="'views/login.html'" ng-show="loginForm.display"></div>
+            <div ng-include="'views/profile.html'" ng-show="profileForm.display"></div>
+            <div ng-include="'views/register.html'" ng-show="registerForm.display"></div>
+            <div ng-include="'views/home.html'" ng-show="homeForm.display"></div>
+            <div ng-include="'views/contact.html'" ng-show="contactForm.display"></div>
+        </div>
+    </div>
+</div>
+
+<div ng-include="'views/partials/_footer.html'"></div>

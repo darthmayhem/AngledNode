@@ -1,5 +1,5 @@
 
-
+var config = require('./../bin/config');
 var express = require('express');
 var logger = require('./../bin/logger');
 var passport = require('passport');
@@ -18,18 +18,26 @@ router.get('/', function (req, res, next) {
   });
 });
 
-/*
-router.get('/register', function (req, res) {
-  res.render('register', {
-    title: config.name,
-    version: config.version,
-    user: req.user,
-    err: req.err
+router.get('/app/config', function(req, res) {
+  return res.status(200).json({
+    appName: config.name,
+    appVersion: config.version
   });
 });
-*/
 
-router.post('/register', function (req, res) {
+router.get('/user/status', function(req, res) {
+  if (!req.isAuthenticated()) {
+    return res.status(200).json({
+      status: false
+    });
+  }
+  res.status(200).json({
+    user: req.user,
+    status: true
+  });
+});
+
+router.post('/user/register', function (req, res) {
   logger.log('info', req);
 
   mongoose.Users.register(new mongoose.Users({username: req.body.username, email: req.body.email}), req.body.password, function (err, user) {
@@ -45,51 +53,39 @@ router.post('/register', function (req, res) {
       logger.log('info', 'authenticate user: ' + req.body.username + ' logged in');
 
       return res.status(200).json({
-        status: 'Registration successful!'
+        status: 'Registration successful!',
+        username: req.body.username
       });
     });
   });
 });
 
-router.get('/login', function (req, res) {
-  res.render('login', {
-    title: config.name,
-    version: config.version,
-    user: req.user,
-    err: req.err
-  });
-});
+router.post('/user/login', function(req, res, next) {
 
-router.post('/login', function(req, res, next) {
-  passport.authenticate('local', function (err, user) {
+  passport.authenticate('local', function(err, user, info) {
     if (err) {
-      logger.log('error', 'login authentication error: ' + err.message);
-      return res.render('login', {
-        title: config.name,
-        version: config.version,
-        user: user,
-        err: err
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({
+        err: info
       });
     }
-
-    if (!user){
-      err = {message: "invalid username/password combination"};
-
-      logger.log('error', 'login authentication error: ' + err.message);
-      return res.render('login', {
-        title: config.name,
-        version: config.version,
-        user: user,
-        err: err
+    req.logIn(user, function(err) {
+      if (err) {
+        return res.status(500).json({
+          err: 'Could not log in user'
+        });
+      }
+      res.status(200).json({
+        status: 'Login successful!',
+        username: user.username
       });
-    }
-
-    logger.log('info', 'login authenticate user: ' + user.username + ' logged in');
-    res.redirect('/#/Profile');
+    });
   })(req, res, next);
 });
 
-router.get('/logout', function (req, res) {
+router.get('/user/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 });

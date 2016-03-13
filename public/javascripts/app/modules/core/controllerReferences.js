@@ -6,6 +6,8 @@ define(function() {
 		'core/controllers/homeController',
 		'core/controllers/contactController',
 		'core/controllers/profileController',
-		'core/controllers/registerController'
+		'core/controllers/registerController',
+		'core/controllers/loginController',
+		'core/controllers/logoutController'
 	];
 });

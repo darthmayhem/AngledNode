@@ -3,39 +3,38 @@
 define(function() {
 	angular
 		.module('coreModule')
-		.controller('registerController',
+		.controller('loginController',
 			['$scope', '$location', 'AuthService',
 			function($scope, $location, AuthService) {
-				$scope.title = 'register.Node';
+				$scope.title = 'login.Node';
 
-				$scope.user = AuthService.getUserProfile();
-
-				$scope.registerForm = {
+				$scope.loginForm = {
 					display: true,
 					username: '',
-					password: '',
-					email: ''
+					password: ''
 				};
 
-				$scope.register = function () {
+				$scope.login = function () {
 
 					// initial values
 					$scope.error = false;
 					$scope.disabled = true;
 
 					// call register from service
-					AuthService.register($scope.registerForm.username, $scope.registerForm.password, $scope.registerForm.email)
+					AuthService.login($scope.loginForm.username, $scope.loginForm.password)
 						// handle success
 						.then(function () {
 							$location.path('/profile');
-							$scope.disabled = false;
 						})
 						// handle error
 						.catch(function () {
 							$scope.error = true;
 							$scope.errorMessage = "Oops...";
 							$scope.disabled = false;
+							$scope.loginForm = {display: true};
 						});
+
+					$scope.user = AuthService.getUserProfile();
 				};
 			}]);
 });

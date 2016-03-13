@@ -3,10 +3,13 @@
 define(function() {
 	angular
 		.module('coreModule')
-		.controller('profileController', ['$scope', function($scope) {
+		.controller('profileController', ['$scope', 'AuthService', function($scope, AuthService) {
 			$scope.title = 'profile.Node';
-			$scope.username = 'username';
-			$scope.firstname = 'firstname';
-			$scope.lastname = 'lastname';
+
+			$scope.user = AuthService.getUserProfile();
+
+			$scope.profileForm = {
+				display: true
+			};
 		}]);
 });

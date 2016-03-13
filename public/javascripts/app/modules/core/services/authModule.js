@@ -6,21 +6,31 @@ define(function() {
     var authModule = angular.module('authModule', []);
 
     authModule.factory('AuthService',
-        ['$q', '$timeout', '$http', '$log',
-        function ($q, $timeout, $http, $log) {
-            // create user variable
-            var user = null;
-
+        ['$q', '$timeout', '$http',
+        function ($q, $timeout, $http) {
             var isLoggedIn = function() {
-                if(user) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (user == null ? false : true)
             }
 
-            var getUserStatus = function() {
-                return user;
+            var getUserProfile = function() {
+                $http.get('/user/status')
+                    // handle success
+                    .success(function (data) {
+                        if(data.status){
+                            user = true;
+                            userProfile = data.user;
+                        } else {
+                            user = false;
+                            userProfile = null;
+                        }
+                    })
+                    // handle error
+                    .error(function () {
+                        user = false;
+                        userProfile = null;
+                    });
+
+                return userProfile;
             }
 
             var login = function(username, password) {
@@ -28,8 +38,60 @@ define(function() {
                 var deferred = $q.defer();
 
                 // send a post request to the server
-                $http.post('/login',
+                $http.post('/user/login',
                     {username: username, password: password})
+                    // handle success
+                    .success(function (data, status) {
+                        if(status === 200 && data.status){
+                            user = true;
+                            deferred.resolve();
+                        } else {
+                            user = false;
+                            deferred.reject();
+                        }
+                    })
+                    // handle error
+                    .error(function (data) {
+                        user = false;
+                        deferred.reject();
+                    });
+
+                getUserProfile();
+
+                // return promise object
+                return deferred.promise;
+            }
+
+            var logout = function() {
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a get request to the server
+                $http.get('/user/logout')
+                    // handle success
+                    .success(function () {
+                        user = false;
+                        deferred.resolve();
+                    })
+                    // handle error
+                    .error(function () {
+                        user = false;
+                        deferred.reject();
+                    });
+
+                getUserProfile();
+
+                // return promise object
+                return deferred.promise;
+            }
+
+            var register = function(username, password, email) {
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a post request to the server
+                $http.post('/user/register',
+                    {username: username, password: password, email: email})
                     // handle success
                     .success(function (data, status) {
                         if(status === 200 && data.status){
@@ -50,58 +112,17 @@ define(function() {
                 return deferred.promise;
             }
 
-            var logout = function() {
-                // create a new instance of deferred
-                var deferred = $q.defer();
-
-                // send a get request to the server
-                $http.get('/logout')
-                    // handle success
-                    .success(function (data) {
-                        user = false;
-                        deferred.resolve();
-                    })
-                    // handle error
-                    .error(function (data) {
-                        user = false;
-                        deferred.reject();
-                    });
-
-                // return promise object
-                return deferred.promise;
-            }
-
-            var register = function(username, password, email) {
-                // create a new instance of deferred
-                var deferred = $q.defer();
-
-                // send a post request to the server
-                $http.post('/register',
-                    {username: username, password: password, email: email})
-                    // handle success
-                    .success(function (data, status) {
-                        if(status === 200 && data.status){
-                            deferred.resolve();
-                        } else {
-                            deferred.reject();
-                        }
-                    })
-                    // handle error
-                    .error(function (data) {
-                        deferred.reject();
-                    });
-
-                // return promise object
-                return deferred.promise;
-            }
+            // create user variable
+            var user = null;
+            var userProfile = null;
 
             // return available functions for use in the controllers
             return ({
                 isLoggedIn: isLoggedIn,
-                getUserStatus: getUserStatus,
+                getUserProfile: getUserProfile,
                 login: login,
                 logout: logout,
-                register: register
+                register: register,
             });
     }]);
 

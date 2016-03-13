@@ -6,17 +6,7 @@
 </head>
 
 <body data-ng-controller="mainController">
-    <% include partials/_header %>
-
-    <div class="container" id="appContainer">
-        <div class="row">
-            <div class="col-md-12">
-                <div data-ng-view=""></div>
-            </div>
-        </div>
-    </div>
-
-    <% include partials/_footer %>
+    <div data-ng-view=""></div>
 
     <script src="/javascripts/components/requirejs/require.js" data-main="/javascripts/app/modules/main.js"></script>
 </body>
