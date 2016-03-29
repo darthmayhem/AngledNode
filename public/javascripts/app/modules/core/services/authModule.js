@@ -33,6 +33,32 @@ define(function() {
                 return userProfile;
             }
 
+            var saveUserProfile = function(user) {
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a post request to the server
+                $http.post('/user/update',
+                    {user: user})
+                    // handle success
+                    .success(function (data, status) {
+                        if(status === 200 && data.updated){
+                            deferred.resolve();
+                        } else {
+                            deferred.reject();
+                        }
+                    })
+                    // handle error
+                    .error(function (data) {
+                        deferred.reject();
+                    });
+
+                getUserProfile();
+
+                // return promise object
+                return deferred.promise;
+            }
+
             var login = function(username, password) {
                 // create a new instance of deferred
                 var deferred = $q.defer();
@@ -120,6 +146,7 @@ define(function() {
             return ({
                 isLoggedIn: isLoggedIn,
                 getUserProfile: getUserProfile,
+                saveUserProfile: saveUserProfile,
                 login: login,
                 logout: logout,
                 register: register,

@@ -37,10 +37,26 @@ router.get('/user/status', function(req, res) {
   });
 });
 
-router.post('/user/register', function (req, res) {
-  logger.log('info', req);
+router.post('/user/update', function(req, res) {
+  var query = {'username': req.user.username};
 
-  mongoose.Users.register(new mongoose.Users({username: req.body.username, email: req.body.email}), req.body.password, function (err, user) {
+  req.newData = {};
+  req.newData.email = req.user.email;
+  req.newData.firstname = req.user.firstname;
+  req.newData.lastname = req.user.lastname;
+
+  mongoose.Users.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+  });
+
+  res.status(200).json({
+    user: req.user.username,
+    updated: true
+  });
+});
+
+router.post('/user/register', function (req, res) {
+  mongoose.Users.register(new mongoose.Users({username: req.body.username, email: req.body.email, firstname: "", lastname: ""}), req.body.password, function (err, user) {
     if (err) {
       logger.log('error', 'register user error: ' + err.message);
       return res.status(500).json({

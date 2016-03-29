@@ -2,21 +2,36 @@
 
 <div class="well">
     <div>
-        <form>
+        <form name="profForm" role="form" ng-submit="saveProfile()" novalidate>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group"
+                        ng-class="{'has-error': profForm.username.$invalid}">
                         <label for="username">user.name</label>
-                        <input type="text" class="form-control" id="username" ng-model="user.username"  ng-required="true" placeholder="enter your username..." />
+                        <input type="text" class="form-control" id="username" name="username" ng-model="profileForm.username"  placeholder="enter your username..." required/>
+                        <span class="help-block" ng-show="profForm.username.$error.required">required</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="firstname">first.name</label>
-                        <input type="text" class="form-control" id="firstname" ng-model="user.firstname" placeholder="enter your first name..." />
+                    <div class="form-group"
+                         ng-class="{'has-error': profForm.email.$invalid}">
+                        <label for="email">e.mail</label>
+                        <input type="email" class="form-control" id="email" name="email" ng-model="profileForm.email" placeholder="enter your email..." required/>
+                        <span class="help-block" ng-show="profForm.email.$error.required">required</span>
+                        <span class="help-block" ng-show="profForm.email.$error.email">email is invalid</span>
                     </div>
-                    <div class="form-group">
+
+                    <div class="form-group"
+                         ng-class="{'has-error': profForm.firstname.$invalid}">
+                        <label for="firstname">first.name</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" ng-model="profileForm.firstname" placeholder="enter your first name..." required/>
+                        <span class="help-block" ng-show="profForm.firstname.$error.required">required</span>
+                    </div>
+
+                    <div class="form-group"
+                         ng-class="{'has-error': profForm.lastname.$invalid}">
                         <label for="lastname">last.name</label>
-                        <input type="text" class="form-control" id="lastname" ng-model="user.lastname" placeholder="enter your last name..." />
+                        <input type="text" class="form-control" id="lastname" name="lastname" ng-model="profileForm.lastname" placeholder="enter your last name..." required/>
+                        <span class="help-block" ng-show="profForm.lastname.$error.required">required</span>
                     </div>
                 </div>
             </div>
@@ -24,8 +39,11 @@
             <br/>
             
             <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" name="submitContact" class="btn btn-default">save changes</button>
+                <div class="col-md-2">
+                    <button type="submit" name="submitContact" class="btn btn-default" ng-disabled="!profForm.$valid">save changes</button>
+                </div>
+                <div class="col-md-10">
+                    {{ statusmessage }}
                 </div>
             </div>
         </form>
