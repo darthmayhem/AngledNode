@@ -17,8 +17,10 @@ define(function() {
 			};
 
 			$scope.saveProfile = function() {
-				AuthService.saveUserProfile($scope.profileForm);
-				$scope.statusmessage = "profile updated";
+				AuthService.saveUserProfile($scope.profileForm).then(
+					function(success) {$scope.statusmessage = success},
+					function(error) { $scope.statusmessage = error }
+				);
 			}
 		}]);
 });

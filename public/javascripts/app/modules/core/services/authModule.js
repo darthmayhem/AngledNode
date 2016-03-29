@@ -43,14 +43,14 @@ define(function() {
                     // handle success
                     .success(function (data, status) {
                         if(status === 200 && data.updated){
-                            deferred.resolve();
+                            deferred.resolve("user profile updated");
                         } else {
-                            deferred.reject();
+                            deferred.reject("user profile update failed");
                         }
                     })
                     // handle error
                     .error(function (data) {
-                        deferred.reject();
+                        deferred.reject("user profile update failed");
                     });
 
                 getUserProfile();
