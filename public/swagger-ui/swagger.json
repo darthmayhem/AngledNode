@@ -1,0 +1,182 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "AngledNode",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/app/config": {
+      "get": {
+        "summary": "Lists application config settings",
+        "operationId": "appConfig",
+        "tags": [
+          "config"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "A listing of provided app config variables",
+            "schema": {
+              "$ref": "#/definitions/AppConfig"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/status": {
+      "get": {
+        "summary": "Returns the current user authentication status",
+        "operationId": "userStatus",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The current user authentication status",
+            "schema": {
+              "$ref": "#/definitions/UserStatus"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "post": {
+        "summary": "Updates the passed user details",
+        "operationId": "userUpdate",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "user": "User",
+            "in": "body",
+            "description": "User details to be updated",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user details have been updated",
+            "schema": {
+              "$ref": "#/definitions/UserUpdate"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AppConfig": {
+      "required": [
+        "appName",
+        "appVersion"
+      ],
+      "properties": {
+        "appName": {
+          "type": "string"
+        },
+        "appVersion": {
+          "type": "string"
+        }
+      }
+    },
+    "UserStatus": {
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "boolean"
+        }
+      }
+    },
+    "UserUpdate": {
+      "required": [
+        "user",
+        "updated"
+      ],
+      "properties": {
+        "user": {
+          "type": "string"
+        },
+        "updated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "User": {
+      "required": [
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -18,44 +18,66 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/app/config', function(req, res) {
-  return res.status(200).json({
-    appName: config.name,
-    appVersion: config.version
-  });
+router.get('/api/app/config', function(req, res) {
+    try{
+        return res.status(200).json({
+            appName: config.name,
+            appVersion: config.version
+        });
+    } catch (ex) {
+        res.status(500).json({
+            code: 500,
+            message: ex
+        });
+    }
 });
 
-router.get('/user/status', function(req, res) {
-  if (!req.isAuthenticated()) {
-    return res.status(200).json({
-      status: false
-    });
+router.get('/api/user/status', function(req, res) {
+  try{
+      if (!req.isAuthenticated()) {
+          return res.status(200).json({
+              user: "anonymous",
+              status: false
+          });
+      }
+      res.status(200).json({
+          user: req.user,
+          status: true
+      });
+  } catch (ex) {
+      res.status(500).json({
+          code: 500,
+          message: ex
+      });
   }
-  res.status(200).json({
-    user: req.user,
-    status: true
-  });
 });
 
-router.post('/user/update', function(req, res) {
-  var query = {'username': req.user.username};
+router.post('/api/user/update', function(req, res) {
+    try{
+        var query = {'username': req.username};
 
-  req.newData = {};
-  req.newData.email = req.user.email;
-  req.newData.firstname = req.user.firstname;
-  req.newData.lastname = req.user.lastname;
+        req.newData = {};
+        req.newData.email = req.email;
+        req.newData.firstname = req.firstname;
+        req.newData.lastname = req.lastname;
 
-  mongoose.Users.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
-    if (err) return res.send(500, { error: err });
-  });
+        mongoose.Users.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
+            if (err) return res.send(500, { code: 500, message: err });
+        });
 
-  res.status(200).json({
-    user: req.user.username,
-    updated: true
-  });
+        res.status(200).json({
+            user: req.user.username,
+            updated: true
+        });
+    } catch (ex) {
+        res.status(500).json({
+            code: 500,
+            message: ex.message
+        });
+    }
 });
 
-router.post('/user/register', function (req, res) {
+router.post('/api/user/register', function (req, res) {
   mongoose.Users.register(new mongoose.Users({username: req.body.username, email: req.body.email, firstname: "", lastname: ""}), req.body.password, function (err, user) {
     if (err) {
       logger.log('error', 'register user error: ' + err.message);
@@ -76,7 +98,7 @@ router.post('/user/register', function (req, res) {
   });
 });
 
-router.post('/user/login', function(req, res, next) {
+router.post('/api/user/login', function(req, res, next) {
 
   passport.authenticate('local', function(err, user, info) {
     if (err) {
@@ -101,9 +123,13 @@ router.post('/user/login', function(req, res, next) {
   })(req, res, next);
 });
 
-router.get('/user/logout', function (req, res) {
+router.get('/api/user/logout', function (req, res) {
   req.logout();
   res.redirect('/');
+});
+
+router.get('/swagger-ui', function (req, res) {
+    res.redirect('/swagger-ui/dist/index.html');
 });
 
 router.get('/ping', function (req, res) {

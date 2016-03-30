@@ -17,7 +17,7 @@ var LocalStrategy = require('passport-local').Strategy;
 //create the application
 var app = express();
 
-//Configure the routes
+// Configure the routes
 var routes = require('./routes/index');
 
 // view engine setup
