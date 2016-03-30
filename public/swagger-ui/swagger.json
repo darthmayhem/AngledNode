@@ -79,10 +79,10 @@
         ],
         "parameters": [
           {
-            "user": "User",
+            "name": "User",
             "in": "body",
-            "description": "User details to be updated",
-            "required": false,
+            "description": "User details model to be updated",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/User"
             }
@@ -91,6 +91,43 @@
         "responses": {
           "200": {
             "description": "The user details have been updated",
+            "schema": {
+              "$ref": "#/definitions/UserUpdate"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/register": {
+      "post": {
+        "summary": "Registers a new site user",
+        "operationId": "userRegister",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "User",
+            "in": "body",
+            "description": "User details model to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user has been created successfully",
             "schema": {
               "$ref": "#/definitions/UserUpdate"
             }
