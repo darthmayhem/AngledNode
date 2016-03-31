@@ -8,13 +8,13 @@ exports.status = function(req, res) {
   try{
       if (!req.isAuthenticated()) {
           return res.status(200).json({
-              user: "anonymous",
-              status: false
+              user: {},
+              status: req.user != null
           });
       }
       res.status(200).json({
           user: req.user,
-          status: true
+          status: req.user != null
       });
   } catch (ex) {
       res.status(500).json({
@@ -65,11 +65,12 @@ exports.update = function(req, res) {
 };
 
 exports.register = function (req, res) {
-  mongoose.Users.register(new mongoose.Users({username: req.body.username, email: req.body.email, firstname: "", lastname: ""}), req.body.password, function (err, user) {
+  mongoose.Users.register(new mongoose.Users({username: req.body.username, email: req.body.email, firstname: req.body.firstname, lastname: req.body.firstname}), req.body.password, function (err, user) {
     if (err) {
       logger.log('error', 'register user error: ' + err.message);
       return res.status(500).json({
-        err: err
+        code: 500,
+        message: err.message
       });
     }
 
@@ -78,39 +79,65 @@ exports.register = function (req, res) {
       logger.log('info', 'authenticate user: ' + req.body.username + ' logged in');
 
       return res.status(200).json({
-        status: 'Registration successful!',
-        username: req.body.username
+        user: req.body.username,
+        updated: true
       });
     });
   });
 };
 
 exports.login = function(req, res, next) {
+    try{
+        passport.authenticate('local', function(err, user, info) {
+            if (err)
+                return res.status(500).json({
+                    code: 500,
+                    err: 'Authentication service error: Could not log in user'
+                });
 
-  passport.authenticate('local', function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.status(401).json({
-        err: info
-      });
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return res.status(500).json({
-          err: 'Could not log in user'
+            if (!user)
+              return res.status(401).json({
+                code: 401,
+                message: info
+              });
+
+            req.logIn(user, function(err) {
+              if (err) {
+                return res.status(500).json({
+                    code: 500,
+                    message: 'Error: Could not log in user'
+                });
+              }
+              res.status(200).json({
+                username: user.username,
+                email: user.email,
+                firstname: user.firstname,
+                lastname: user.lastname
+              });
+            });
+        })(req, res, next);
+    } catch (ex) {
+        res.status(500).json({
+            code: 500,
+            message: ex.message
         });
-      }
-      res.status(200).json({
-        status: 'Login successful!',
-        username: user.username
-      });
-    });
-  })(req, res, next);
+    }
 };
 
 exports.logout = function (req, res) {
-  req.logout();
-  res.redirect('/');
+    try {
+        req.session.destroy(function(){});
+        delete req.session;
+        req.logout();
+
+        res.status(200).json({
+            "user": { name: "anonymous" },
+            "status": req.user != null
+        });
+    } catch (ex) {
+        res.status(500).json({
+            code: 500,
+            message: ex.message
+        });
+    }
 };

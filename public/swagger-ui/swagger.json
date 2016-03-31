@@ -1,10 +1,11 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
+    "version": "0.1.0",
     "title": "AngledNode",
     "license": {
-      "name": "MIT"
+      "name": "MIT",
+      "url": "http://mit-license.org/"
     }
   },
   "host": "localhost:3000",
@@ -118,10 +119,10 @@
           {
             "name": "User",
             "in": "body",
-            "description": "User details model to be updated",
+            "description": "User details model to be registered",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/UserRegister"
             }
           }
         ],
@@ -130,6 +131,67 @@
             "description": "The user has been created successfully",
             "schema": {
               "$ref": "#/definitions/UserUpdate"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "Logs in a user",
+        "operationId": "userLogin",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "user"
+        ],
+        "parameters": [
+          {
+            "name": "User",
+            "in": "body",
+            "description": "User login information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user has been successfully logged in",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "get": {
+        "summary": "Logs the current user out",
+        "operationId": "userLogout",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The current user authentication status",
+            "schema": {
+              "$ref": "#/definitions/UserStatus"
             }
           },
           "default": {
@@ -162,6 +224,9 @@
         "status"
       ],
       "properties": {
+        "user": {
+          "type": "object"
+        },
         "status": {
           "type": "boolean"
         }
@@ -178,6 +243,44 @@
         },
         "updated": {
           "type": "boolean"
+        }
+      }
+    },
+    "UserRegister": {
+      "required": [
+        "username",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        }
+      }
+    },
+    "UserLogin": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
         }
       }
     },
