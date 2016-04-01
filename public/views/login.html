@@ -3,21 +3,27 @@
 <div class="well">
     <div class="row">
         <div class="col-md-12">
-            <form role="form" ng-submit="login()">
+            <form name="logForm" role="form" ng-submit="login()" novalidate>
                 <div ng-show="error" class="alert alert-danger">{{ errorMessage }}</div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="username">username</label>
-                            <input type="text" class="form-control" ng-model="loginForm.username" id="username" placeholder="enter your username..." />
+                        <div class="form-group"
+                             ng-class="{'has-error': logForm.username.$dirty && logForm.username.$invalid}">
+                            <label for="username">user.name</label>
+                            <input type="text" class="form-control" id="username" name="username" ng-model="loginForm.username"  placeholder="enter your username..." required/>
+                            <span class="help-block" ng-if="logForm.username.$dirty" ng-show="logForm.username.$error.required">required</span>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">password</label>
-                            <input type="password" class="form-control" ng-model="loginForm.password" id="password" placeholder="and your password..." />
+                            <div class="form-group"
+                                 ng-class="{'has-error': logForm.password.$dirty && logForm.password.$invalid, 'has-feedback': logForm.password.$dirty}">
+                                <label for="password">pass.word</label>
+                                <input type="password" class="form-control" id="password" name="password" ng-model="loginForm.password"  placeholder="...and your password" required/>
+                                <span class="help-block" ng-if="logForm.password.$dirty" ng-show="logForm.password.$error.required">required</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -26,7 +32,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" name="submitContact" class="btn btn-default" ng-disabled="disabled">let me in...</button>
+                        <button type="submit" name="submitContact" class="btn btn-default" ng-disabled="!logForm.$valid">let me in...</button>
                         <br/><br/>
                         <span>or <a href="/#/register">register</a>...</span>
                     </div>

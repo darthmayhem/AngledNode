@@ -9,6 +9,7 @@ define(['core/runners/logRunner'], function(logRunner) {
 		$rootScope.$on('$routeChangeStart',
 			function (event, next) {
 				$rootScope.userProfile = AuthService.getUserProfile();
+
 				if (next.access.restricted &&
 					!AuthService.isLoggedIn()) {
 					$location.path('/login');

@@ -3,8 +3,8 @@ define(function() {
 	angular
 		.module('coreModule')
 		.controller('logoutController',
-			['$rootScope', '$scope', '$location', 'AuthService',
-			function($rootScope, $scope, $location, AuthService) {
+			['$rootScope', '$scope', '$route', '$location', 'AuthService',
+			function($rootScope, $scope, $route, $location, AuthService) {
 				$scope.title = 'logout.Node';
 
 				$scope.logoutForm = {
@@ -17,8 +17,11 @@ define(function() {
 					AuthService.logout()
 						// handle success
 						.then(function () {
+							$rootScope.$broadcast('userLoggedOut');
+
 							$rootScope.userProfile = null;
 							$location.path('/loggedout');
+							$route.reload();
 						})
 						// handle error
 						.catch(function () {

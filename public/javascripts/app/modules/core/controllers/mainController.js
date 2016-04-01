@@ -2,8 +2,16 @@
 define (function() {
 	angular
 		.module('coreModule')
-		.controller('mainController', ['$rootScope', '$scope', 'ConfigService', 'AuthService', function($rootScope, $scope, ConfigService, AuthService) {
+		.controller('mainController', ['$scope', 'ConfigService', 'AuthService', function($scope, ConfigService, AuthService) {
 			$scope.config = ConfigService.getConfig();
-			$rootScope.userProfile = AuthService.getUserProfile();
+			$scope.userProfile = AuthService.getUserProfile();
+
+			$scope.$on('userLoggedIn', function () {
+				console.log('user logged in');
+			});
+
+			$scope.$on('userLoggedOut', function () {
+				console.log('user logged out');
+			});
 		}]);
 });

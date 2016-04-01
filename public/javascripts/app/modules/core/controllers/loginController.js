@@ -24,7 +24,9 @@ define(function() {
 					AuthService.login($scope.loginForm.username, $scope.loginForm.password)
 						// handle success
 						.then(function () {
-							$location.absUrl($location.$$protocol + '://' + $location.$$host + ':' + $location.$$port + '/');
+							$rootScope.$broadcast('userLoggedIn');
+
+							$location.url('/');
 						})
 						// handle error
 						.catch(function (err) {
