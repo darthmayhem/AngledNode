@@ -3,30 +3,41 @@
 <div class="well">
     <div class="row">
         <div class="col-md-12">
-            <form role="form" ng-submit="register()">
+            <form name="regForm" role="form" ng-submit="register()" novalidate>
                 <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="username">username</label>
-                            <input type="text" class="form-control" id="username" ng-model="registerForm.username" placeholder="enter your username..." />
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="password">password</label>
-                            <input type="password" class="form-control" id="password" ng-model="registerForm.password" placeholder="and your password..." />
+                    <div class="col-md-12">
+                        <div class="form-group"
+                             ng-class="{'has-error': regForm.username.$dirty && regForm.username.$invalid}">
+                            <label for="username">user.name</label>
+                            <input type="text" class="form-control" id="username" name="username" ng-model="registerForm.username"  placeholder="enter your username..." required/>
+                            <span class="help-block" ng-if="regForm.username.$dirty" ng-show="regForm.username.$error.required">required</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="email">email</label>
-                            <input type="email" class="form-control" ng-model="registerForm.email" id="email" placeholder="enter your email..." />
+                        <div class="form-group"
+                             ng-class="{'has-error': regForm.password.$dirty && regForm.password.$invalid, 'has-feedback': regForm.password.$dirty}">
+                            <label for="password">pass.word</label>
+                            <input type="password" class="form-control" id="password" name="password" ng-model="registerForm.password"  placeholder="enter your password..." required/>
+                            <span id="strength" class="form-control-feedback" style="width:140px" check-strength="registerForm.password"></span>
+                            <span class="help-block" ng-if="regForm.password.$dirty" ng-show="regForm.password.$error.required">required</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group"
+                             ng-class="{'has-error': regForm.email.$dirty && regForm.email.$invalid}">
+                            <label for="email">e.mail</label>
+                            <input type="email" class="form-control" id="email" name="email" ng-model="registerForm.email" placeholder="enter your email..." required/>
+                            <span class="help-block" ng-if="regForm.email.$dirty" ng-show="regForm.email.$error.required">required</span>
+                            <span class="help-block" ng-if="regForm.email.$dirty" ng-show="regForm.email.$error.email">email is invalid</span>
                         </div>
                     </div>
                 </div>
@@ -35,7 +46,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" name="submitContact" class="btn btn-default" ng-disabled="disabled">sign me up...</button>
+                        <button type="submit" name="submitContact" class="btn btn-default" ng-disabled="!regForm.$valid">sign me up...</button>
                     </div>
                 </div>
             </form>

@@ -8,6 +8,7 @@ define(function() {
 		'core/controllers/profileController',
 		'core/controllers/registerController',
 		'core/controllers/loginController',
+		'core/controllers/loggedoutController',
 		'core/controllers/logoutController'
 	];
 });

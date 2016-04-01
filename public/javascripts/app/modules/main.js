@@ -12,6 +12,7 @@ require.config({
 		'coreModule': 'core/coreModule',
 		'authModule': 'core/services/authModule',
 		'configModule': 'core/services/configModule',
+		'directivesModule':  'directives/directivesModule',
 		'themeModule':  'theme/themeModule'
 	},
 	
@@ -21,9 +22,10 @@ require.config({
 		'angular-route': { deps: [ 'angular' ] },
 		
 		'themeModule': { deps: [ 'angular' ] },
+		'directivesModule': { deps: [ 'angular' ] },
 		'authModule': { deps: [ 'angular' ] },
 		'configModule': { deps: [ 'angular' ] },
-		'coreModule': { deps: [ 'angular-route', 'themeModule', 'authModule', 'configModule' ] }
+		'coreModule': { deps: [ 'angular-route', 'directivesModule', 'themeModule', 'authModule', 'configModule' ] }
 	}
 });
 

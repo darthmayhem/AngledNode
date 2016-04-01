@@ -1,14 +1,11 @@
 
-
 define(function() {
 	angular
 		.module('coreModule')
 		.controller('logoutController',
-			['$scope', '$location', 'AuthService',
-			function($scope, $location, AuthService) {
+			['$rootScope', '$scope', '$location', 'AuthService',
+			function($rootScope, $scope, $location, AuthService) {
 				$scope.title = 'logout.Node';
-
-				$scope.user = AuthService.getUserProfile();
 
 				$scope.logoutForm = {
 					display: true
@@ -20,15 +17,13 @@ define(function() {
 					AuthService.logout()
 						// handle success
 						.then(function () {
-							$location.path('/');
-							$scope.logoutForm = {display: true};
+							$rootScope.userProfile = null;
+							$location.path('/loggedout');
 						})
 						// handle error
 						.catch(function () {
 							$scope.logoutForm = {display: true};
 						});
-
-					$scope.user = AuthService.getUserProfile();
 				};
 
 				$scope.logout();

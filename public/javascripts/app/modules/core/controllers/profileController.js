@@ -1,12 +1,11 @@
 
-
 define(function() {
 	angular
 		.module('coreModule')
-		.controller('profileController', ['$scope', 'AuthService', function($scope, AuthService) {
+		.controller('profileController', ['$rootScope', '$scope', 'AuthService', function($rootScope, $scope, AuthService) {
 			$scope.title = 'profile.Node';
 
-			$scope.user = AuthService.getUserProfile();
+            $rootScope.userProfile = AuthService.getUserProfile();
 
 			$scope.profileForm = {
 				display: true,

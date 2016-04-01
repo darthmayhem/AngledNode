@@ -44,18 +44,6 @@ exports.update = function(req, res) {
             }
         });
 
-        /*
-        mongoose.Users.findOneAndUpdate(query, req.newData, {upsert:true}, function(err, doc){
-            if (err) return res.send(500, { code: 500, message: err });
-            else {
-                res.status(200).json({
-                    user: req.username,
-                    updated: true
-                });
-            }
-        });
-        */
-        
     } catch (ex) {
         res.status(500).json({
             code: 500,
@@ -95,27 +83,34 @@ exports.login = function(req, res, next) {
                     err: 'Authentication service error: Could not log in user'
                 });
 
-            if (!user)
-              return res.status(401).json({
-                code: 401,
-                message: info
-              });
+            if (!user) {
+                logger.log('info', 'User login failure: ' + req.body.username);
+
+                return res.status(401).json({
+                    code: 401,
+                    message: info
+                });
+            }
 
             req.logIn(user, function(err) {
-              if (err) {
-                return res.status(500).json({
-                    code: 500,
-                    message: 'Error: Could not log in user'
+                if (err) {
+                    return res.status(500).json({
+                        code: 500,
+                        message: 'Error: Could not log in user'
+                    });
+                }
+
+                logger.log('info', 'User login: ' + req.body.username);
+
+                res.status(200).json({
+                    username: user.username,
+                    email: user.email,
+                    firstname: user.firstname,
+                    lastname: user.lastname
                 });
-              }
-              res.status(200).json({
-                username: user.username,
-                email: user.email,
-                firstname: user.firstname,
-                lastname: user.lastname
-              });
             });
         })(req, res, next);
+
     } catch (ex) {
         res.status(500).json({
             code: 500,
@@ -126,6 +121,8 @@ exports.login = function(req, res, next) {
 
 exports.logout = function (req, res) {
     try {
+        logger.log('info', 'User logout: ' + req.user.username);
+
         req.session.destroy(function(){});
         delete req.session;
         req.logout();
@@ -134,6 +131,7 @@ exports.logout = function (req, res) {
             "user": { name: "anonymous" },
             "status": req.user != null
         });
+
     } catch (ex) {
         res.status(500).json({
             code: 500,

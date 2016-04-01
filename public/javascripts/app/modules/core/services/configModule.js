@@ -11,7 +11,7 @@ define(function() {
             var config = {};
 
             var getConfig = function() {
-                $http.get('/app/config')
+                $http.get('/api/app/config')
                     // handle success
                     .success(function (data) {
                         config.appName = data.appName;

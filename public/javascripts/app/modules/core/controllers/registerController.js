@@ -1,14 +1,13 @@
 
-
 define(function() {
 	angular
 		.module('coreModule')
 		.controller('registerController',
-			['$scope', '$location', 'AuthService',
-			function($scope, $location, AuthService) {
+			['$rootScope', '$scope', '$location', 'AuthService',
+			function($rootScope, $scope, $location, AuthService) {
 				$scope.title = 'register.Node';
 
-				$scope.user = AuthService.getUserProfile();
+				$rootScope.userProfile = AuthService.getUserProfile();
 
 				$scope.registerForm = {
 					display: true,
@@ -21,21 +20,19 @@ define(function() {
 
 					// initial values
 					$scope.error = false;
-					$scope.disabled = true;
 
 					// call register from service
 					AuthService.register($scope.registerForm.username, $scope.registerForm.password, $scope.registerForm.email)
 						// handle success
 						.then(function () {
 							$location.path('/profile');
-							$scope.disabled = false;
 						})
 						// handle error
-						.catch(function () {
+						.catch(function (err) {
 							$scope.error = true;
-							$scope.errorMessage = "Oops...";
-							$scope.disabled = false;
+							$scope.errorMessage = "Register error: " + err;
+							$scope.registerForm.display = true;
 						});
 				};
-			}]);
+			}])
 });

@@ -9,24 +9,23 @@ define(function() {
         ['$q', '$timeout', '$http',
         function ($q, $timeout, $http) {
             var isLoggedIn = function() {
-                return (user == null ? false : true)
+                return (userProfile == null ? false : true)
             }
 
             var getUserProfile = function() {
-                $http.get('/user/status')
+                if (isLoggedIn()) return userProfile;
+                
+                $http.get('/api/user/status')
                     // handle success
                     .success(function (data) {
                         if(data.status){
-                            user = true;
                             userProfile = data.user;
                         } else {
-                            user = false;
                             userProfile = null;
                         }
                     })
                     // handle error
                     .error(function () {
-                        user = false;
                         userProfile = null;
                     });
 
@@ -38,7 +37,7 @@ define(function() {
                 var deferred = $q.defer();
 
                 // send a post request to the server
-                $http.post('/user/update',
+                $http.post('/api/user/update',
                     {user: user})
                     // handle success
                     .success(function (data, status) {
@@ -64,22 +63,17 @@ define(function() {
                 var deferred = $q.defer();
 
                 // send a post request to the server
-                $http.post('/user/login',
+                $http.post('/api/user/login',
                     {username: username, password: password})
                     // handle success
                     .success(function (data, status) {
-                        if(status === 200 && data.status){
-                            user = true;
+                        if(status === 200 && data.username){
                             deferred.resolve();
-                        } else {
-                            user = false;
-                            deferred.reject();
                         }
                     })
                     // handle error
                     .error(function (data) {
-                        user = false;
-                        deferred.reject();
+                        deferred.reject(data.message);
                     });
 
                 getUserProfile();
@@ -93,15 +87,13 @@ define(function() {
                 var deferred = $q.defer();
 
                 // send a get request to the server
-                $http.get('/user/logout')
+                $http.get('/api/user/logout')
                     // handle success
                     .success(function () {
-                        user = false;
                         deferred.resolve();
                     })
                     // handle error
                     .error(function () {
-                        user = false;
                         deferred.reject();
                     });
 
@@ -116,22 +108,19 @@ define(function() {
                 var deferred = $q.defer();
 
                 // send a post request to the server
-                $http.post('/user/register',
+                $http.post('/api/user/register',
                     {username: username, password: password, email: email})
                     // handle success
                     .success(function (data, status) {
-                        if(status === 200 && data.status){
+                        if(status === 200 && data.updated){
                             user = true;
                             deferred.resolve();
-                        } else {
-                            user = false;
-                            deferred.reject();
                         }
                     })
                     // handle error
                     .error(function (data) {
                         user = false;
-                        deferred.reject();
+                        deferred.reject(data.message);
                     });
 
                 // return promise object

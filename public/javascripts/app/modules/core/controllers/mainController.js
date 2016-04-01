@@ -1,10 +1,9 @@
 
-
 define (function() {
 	angular
 		.module('coreModule')
-		.controller('mainController', ['$scope', 'ConfigService', 'AuthService', function($scope, ConfigService, AuthService) {
+		.controller('mainController', ['$rootScope', '$scope', 'ConfigService', 'AuthService', function($rootScope, $scope, ConfigService, AuthService) {
 			$scope.config = ConfigService.getConfig();
-			$scope.user = AuthService.getUserProfile();
+			$rootScope.userProfile = AuthService.getUserProfile();
 		}]);
 });

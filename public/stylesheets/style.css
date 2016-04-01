@@ -10,3 +10,26 @@ a {
 .navbar-header {
   border-bottom-color: #000000;
 }
+
+/* Fix for password validation feedback not displaying in field properly */
+.has-feedback .form-control-feedback {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+}
+
+/* Password validation CSS */
+ul#strength {
+  display:inline;
+  list-style:none;
+  margin:0;
+  margin-left:0px;
+  padding:0;
+  vertical-align:2px;
+  text-align: right;
+}

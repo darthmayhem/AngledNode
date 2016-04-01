@@ -1,14 +1,14 @@
 
 
 define(['core/runners/logRunner'], function(logRunner) {
-	var coreModule = angular.module('coreModule', ['ngRoute', 'authModule', 'configModule', 'themeModule']);
+	var coreModule = angular.module('coreModule', ['ngRoute', 'authModule', 'configModule', 'themeModule', 'directivesModule']);
 
 	coreModule.run(logRunner);
 
 	coreModule.run(function ($rootScope, $location, $route, AuthService) {
 		$rootScope.$on('$routeChangeStart',
 			function (event, next) {
-				//$rootScope.user = AuthService.getUserProfile();
+				$rootScope.userProfile = AuthService.getUserProfile();
 				if (next.access.restricted &&
 					!AuthService.isLoggedIn()) {
 					$location.path('/login');
@@ -25,10 +25,11 @@ define(['core/runners/logRunner'], function(logRunner) {
             .when('/profile', { controller: 'profileController', templateUrl: '/views/index.html', access: {restricted: true} })
 			.when('/login', { controller: 'loginController', templateUrl: '/views/index.html', access: {restricted: false} })
 			.when('/logout', { controller: 'logoutController', templateUrl: '/views/index.html', access: {restricted: false} })
+			.when('/loggedout', { controller: 'loggedoutController', templateUrl: '/views/index.html', access: {restricted: false} })
 			.when('/register', { controller: 'registerController', templateUrl: '/views/index.html', access: {restricted: false} })
 			.otherwise({redirectTo: '/'})
 	}]);
-	
+
 	require(['core/controllerReferences'], function(references) {
 		require(references, function() {
 			angular.bootstrap(document, ['coreModule']);
