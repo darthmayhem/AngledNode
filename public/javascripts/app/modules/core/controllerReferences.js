@@ -2,13 +2,13 @@
 
 define(function() {
 	return [
-		'core/controllers/mainController',
-		'core/controllers/homeController',
-		'core/controllers/contactController',
-		'core/controllers/profileController',
-		'core/controllers/registerController',
-		'core/controllers/loginController',
-		'core/controllers/loggedoutController',
-		'core/controllers/logoutController'
+		'core/controllers/main.controller',
+		'core/controllers/home.controller',
+		'core/controllers/contact.controller',
+		'core/controllers/profile.controller',
+		'core/controllers/register.controller',
+		'core/controllers/login.controller',
+		'core/controllers/loggedout.controller',
+		'core/controllers/logout.controller'
 	];
 });

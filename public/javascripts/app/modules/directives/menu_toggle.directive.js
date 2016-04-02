@@ -2,8 +2,10 @@
  * Created by Steve on 4/2/2016.
  */
 
-angular.module('menu.directives')
-    .run(['$templateCache', '$log', function ($templateCache, $log) {
+define(function() {
+    var menuToggle = angular.module('menutoggle.directive', []);
+
+    menuToggle.run(['$templateCache', '$log', function ($templateCache, $log) {
         $templateCache.put('partials/menu-toggle.tmpl.html',
             '<md-button class="md-button-toggle" ng-class="{\'toggled\' : isOpen()}"\n' +
             '  ng-click="toggle()"\n' +
@@ -19,8 +21,11 @@ angular.module('menu.directives')
             '  </li>\n' +
             '</ul>\n' +
             '');
-    }])
-    .directive('menuToggle', ['$timeout', function ($timeout ) {
+
+        $log.info('menutoggle.directive: initialized');
+    }]);
+
+    menuToggle.directive('menuToggle', ['$timeout', function ($timeout ) {
         return {
             scope: {
                 section: '='
@@ -44,3 +49,4 @@ angular.module('menu.directives')
             }
         };
     }])
+});

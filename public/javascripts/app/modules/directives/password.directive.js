@@ -1,8 +1,8 @@
 
 define(function() {
-	var directivesModule = angular.module('directivesModule', []);
+	var passwordModule = angular.module('password.directive', []);
 
-	directivesModule.directive('checkStrength', function () {
+	passwordModule.directive('checkStrength', function () {
 
 		return {
 			replace: false,
@@ -83,7 +83,7 @@ define(function() {
 
 	});
 
-	directivesModule.run(['$log', function($log) {
+	passwordModule.run(['$log', function($log) {
 		$log.info('password.directive: initialized');
 	}]);
 });

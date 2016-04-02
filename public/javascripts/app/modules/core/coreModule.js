@@ -1,7 +1,17 @@
 
 
 define(['core/runners/logRunner'], function(logRunner) {
-	var coreModule = angular.module('coreModule', ['ngRoute', 'authModule', 'configModule', 'themeModule', 'directivesModule']);
+	var coreModule = angular.module('coreModule',
+		[
+			'ngRoute',
+			'authModule',
+			'configModule',
+			'menuModule',
+			'themeModule',
+			'menulink.directive',
+			'menutoggle.directive',
+			'password.directive'
+		]);
 
 	coreModule.run(logRunner);
 

@@ -2,12 +2,10 @@
  * Created by Steve on 4/2/2016.
  */
 
-(function(){
+define(function() {
+    var menuModule = angular.module('menuModule', []);
 
-    'use strict';
-
-    angular.module('menuModule')
-        .factory('menu', [
+    menuModule.factory('menu', [
             '$location',
             '$rootScope',
             function ($location) {
@@ -86,9 +84,9 @@
                         (a.humanName > b.humanName) ? 1 : 0;
                 }
 
-            }])
+            }]);
 
-        .run(['$log', function($log) {
-            $log.info('menuModule initialized');
-        }]);
-})();
+    menuModule.run(['$log', function($log) {
+        $log.info('menuModule: initialized');
+    }]);
+});

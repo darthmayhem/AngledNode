@@ -12,8 +12,13 @@ require.config({
 		'coreModule': 'core/coreModule',
 		'authModule': 'core/services/auth.service',
 		'configModule': 'core/services/config.service',
-		'directivesModule':  'directives/password.directive',
-		'themeModule':  'theme/theme'
+        'menuModule': 'core/services/menu.service',
+        'themeModule':  'theme/theme',
+
+        //load directives
+        'menulink.directive':  'directives/menu_link.directive',
+        'menutoggle.directive':  'directives/menu_toggle.directive',
+        'password.directive':  'directives/password.directive'
 	},
 	
 	shim: {
@@ -22,10 +27,24 @@ require.config({
 		'angular-route': { deps: [ 'angular' ] },
 		
 		'themeModule': { deps: [ 'angular' ] },
-		'directivesModule': { deps: [ 'angular' ] },
 		'authModule': { deps: [ 'angular' ] },
 		'configModule': { deps: [ 'angular' ] },
-		'coreModule': { deps: [ 'angular-route', 'directivesModule', 'themeModule', 'authModule', 'configModule' ] }
+        'menuModule': { deps: [ 'angular' ] },
+
+        'password.directive': { deps: [ 'angular' ] },
+        'menulink.directive': { deps: [ 'angular' ] },
+        'menutoggle.directive': { deps: [ 'angular' ] },
+
+		'coreModule': { deps: [
+            'angular-route',
+            'menulink.directive',
+            'menutoggle.directive',
+            'password.directive',
+            'themeModule',
+            'authModule',
+            'menuModule',
+            'configModule'
+        ] }
 	}
 });
 
