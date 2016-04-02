@@ -3,7 +3,12 @@
  */
 
 define(function() {
-    var menuModule = angular.module('menuModule', []);
+    var menuModule = angular.module('menuModule',
+        [
+            //'menu_link.directive',
+            //'menu_toggle.directive'
+        ]
+    );
 
     menuModule.factory('menu', [
             '$location',

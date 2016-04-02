@@ -3,7 +3,7 @@
  */
 
 define(function() {
-    var menuToggle = angular.module('menutoggle.directive', []);
+    var menuToggle = angular.module('menuModule', []);
 
     menuToggle.run(['$templateCache', '$log', function ($templateCache, $log) {
         $templateCache.put('partials/menu-toggle.tmpl.html',

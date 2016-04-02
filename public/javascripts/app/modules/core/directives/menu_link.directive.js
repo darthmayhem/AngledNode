@@ -3,7 +3,7 @@
  */
 
 define(function() {
-    var menuLink = angular.module('menulink.directive', []);
+    var menuLink = angular.module('menuModule', []);
 
     menuLink.run(['$templateCache', '$log', function ($templateCache, $log) {
         $templateCache.put('partials/menu-link.tmpl.html',

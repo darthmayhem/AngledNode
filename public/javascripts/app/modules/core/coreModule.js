@@ -1,6 +1,6 @@
 
 
-define(['core/runners/logRunner'], function(logRunner) {
+define(['core/runners/log.runner'], function(logRunner) {
 	var coreModule = angular.module('coreModule',
 		[
 			'ngRoute',
@@ -8,8 +8,6 @@ define(['core/runners/logRunner'], function(logRunner) {
 			'configModule',
 			'menuModule',
 			'themeModule',
-			'menulink.directive',
-			'menutoggle.directive',
 			'password.directive'
 		]);
 
@@ -41,7 +39,11 @@ define(['core/runners/logRunner'], function(logRunner) {
 			.otherwise({redirectTo: '/'})
 	}]);
 
-	require(['core/controllerReferences'], function(references) {
+	coreModule.init = function(){
+
+	};
+
+	require(['core/references/controller.references'], function(references) {
 		require(references, function() {
 			angular.bootstrap(document, ['coreModule']);
 		});
