@@ -84,6 +84,6 @@ define(function() {
 	});
 
 	directivesModule.run(['$log', function($log) {
-		$log.info('Initialized the directivesModule');
+		$log.info('directivesModule: initialized');
 	}]);
 });

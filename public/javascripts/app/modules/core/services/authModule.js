@@ -143,7 +143,7 @@ define(function() {
     }]);
 
     authModule.run(['$log', function($log) {
-        $log.info('Initialized the authModule');
+        $log.info('authModule: initialized');
     }]);
 });
 
