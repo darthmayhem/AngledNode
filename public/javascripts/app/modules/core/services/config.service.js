@@ -33,7 +33,7 @@ define(function() {
     }]);
 
     configModule.run(['$log', function($log) {
-        $log.info('configModule: initialized');
+        $log.info('config.service: initialized');
     }]);
 });
 

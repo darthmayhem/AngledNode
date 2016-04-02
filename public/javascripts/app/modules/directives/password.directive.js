@@ -84,6 +84,6 @@ define(function() {
 	});
 
 	directivesModule.run(['$log', function($log) {
-		$log.info('directivesModule: initialized');
+		$log.info('password.directive: initialized');
 	}]);
 });

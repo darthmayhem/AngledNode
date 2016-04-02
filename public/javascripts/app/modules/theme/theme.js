@@ -3,6 +3,6 @@ define(function() {
 	var themeModule = angular.module('themeModule', []);
 	
 	themeModule.run(['$log', function($log) {
-		$log.info('themeModule: initialized');
+		$log.info('theme: initialized');
 	}]);
 });

@@ -10,10 +10,10 @@ require.config({
 		
 		//load modules
 		'coreModule': 'core/coreModule',
-		'authModule': 'core/services/authModule',
-		'configModule': 'core/services/configModule',
-		'directivesModule':  'directives/directivesModule',
-		'themeModule':  'theme/themeModule'
+		'authModule': 'core/services/auth.service',
+		'configModule': 'core/services/config.service',
+		'directivesModule':  'directives/password.directive',
+		'themeModule':  'theme/theme'
 	},
 	
 	shim: {
