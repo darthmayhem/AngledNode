@@ -3,31 +3,47 @@ define(function () {
 
 	'use strict';
 
-	require(['controllers', 'services', 'directives', 'runners'],
-		function (controllersReferences, serviceReferences, directiveReferences, runnerReferences){
-			require(controllersReferences, function(){});
-			require(serviceReferences, function(){});
-			require(directiveReferences, function(){});
-			require(runnerReferences, function(){});
-		});
+    require([
+            'runners',
+            'controllers',
+            'services',
+            'directives'
+        ],
+        function (
+            runnerReferences,
+            controllerReferences,
+            serviceReferences,
+            directiveReferences
+        ){
+            require(runnerReferences, function(){});
+            require(controllerReferences, function(){});
+            require(serviceReferences, function(){});
+            require(directiveReferences, function(){});
 
-	var app = angular.module('coreModule',
+            require('theme', function(){});
+        }
+    );
+
+	var app = angular.module(
+		'coreModule',
 		[
 			'ngRoute',
-			'services',
-			'controllers',
-			'directives',
 			'runners',
+            'controllers',
+			'services',
+			'directives',
 			'theme'
 		]
 	);
 
 	app.init = function () {
-		console.log('hi');
+		console.log('bootstrapping core module...');
 		angular.bootstrap(document, ['coreModule']);
+        console.log('complete');
 	};
 
-	app.config(['$routeProvider', '$locationProvider',
+	app.config([
+		'$routeProvider',
 		function ($routeProvider) {
 			$routeProvider
 				.when('/', { controller: 'homeController', templateUrl: '/views/index.html', access: {restricted: false} })
@@ -45,20 +61,20 @@ define(function () {
 	//app.run(runners);
 
 	app.run(function ($window, $rootScope, $location, $route, AuthService) {
-		//auth.setAuthorizationHeaders();
-		//user.initialize();
+        //auth.setAuthorizationHeaders();
+        //user.initialize();
 
-		$rootScope.$on('$routeChangeStart',
-			function (event, next) {
-				$rootScope.userProfile = AuthService.getUserProfile();
+        $rootScope.$on('$routeChangeStart',
+            function (event, next) {
+                $rootScope.userProfile = AuthService.getUserProfile();
 
-				if (next.access.restricted &&
-					!AuthService.isLoggedIn()) {
-					$location.path('/login');
-					$route.reload();
-				}
-			});
-	});
+                if (next.access.restricted &&
+                    !AuthService.isLoggedIn()) {
+                    $location.path('/login');
+                    $route.reload();
+                }
+            });
+    });
 
-	return app;
+    return app;
 });

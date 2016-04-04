@@ -4,35 +4,17 @@ require.config({
 	paths: {
 		'jquery': '../../components/jquery/jquery.min',
 		'bootstrap': '../../components/bootstrap-3.3.6-dist/js/bootstrap.min',
+        'domReady': '../../components/domready/ready.min',
 		'angular': '../../components/angular/angular.min',
-		'angular-route': '../../components/angular-route/angular-route.min',
-        'controllers': './core/references/controller.references',
-        'services': './core/references/service.references',
-        'directives': './core/references/directive.references',
-        'runners': './core/references/runner.references',
-        'theme': './theme/theme',
-        'core': './core/core'
+		'angular-route': '../../components/angular-route/angular-route.min'
 	},
 	
 	shim: {
         'bootstrap': { deps: [ 'jquery' ] },
-        'angular': { deps: [ 'bootstrap' ] },
-        'angular-route': { deps: [ 'angular' ]},
+        'angular': { deps: [ 'bootstrap' ], exports: 'angular' },
+        'angular-route': { deps: [ 'angular' ], exports: 'angular-route'}
+	},
 
-        'controllers': { deps: [ 'angular' ] },
-        'services': { deps: [ 'angular' ] },
-        //'directives': { deps: [ 'angular' ] },
-        //'runners': { deps: [ 'angular' ] },
-        //'theme': { deps: [ 'angular' ] },
-        'core': {
-            deps: [
-                'angular-route'
-            ],
-            exports: 'core'
-        }
-	}
-});
-
-require(['core'], function (core) {
-	core.init();
+    // start the app
+    deps: ['./bootstrap']
 });
