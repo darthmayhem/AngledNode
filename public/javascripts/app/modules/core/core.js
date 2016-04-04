@@ -1,20 +1,19 @@
 
+define(function () {
 
-define(function (require) {
 	'use strict';
 
-	//var angular = require('angular');
-	//var angularRoute = require('angular-route');
-
-	var services = require('./references/service.references');
-	var controllers = require('./references/controller.references');
-	var directives = require('./references/directive.references');
-	var runners = require('./references/runner.references');
-
-	var theme = require('../theme/theme');
+	require(['controllers', 'services', 'directives', 'runners'],
+		function (controllersReferences, serviceReferences, directiveReferences, runnerReferences){
+			require(controllersReferences, function(){});
+			require(serviceReferences, function(){});
+			require(directiveReferences, function(){});
+			require(runnerReferences, function(){});
+		});
 
 	var app = angular.module('coreModule',
 		[
+			'ngRoute',
 			'services',
 			'controllers',
 			'directives',
@@ -28,10 +27,8 @@ define(function (require) {
 		angular.bootstrap(document, ['coreModule']);
 	};
 
-	app.config(['$routeProvider', '$locationProvider', '$httpProvider',
-		function ($routeProvider, $locationProvider, $httpProvider) {
-			//$httpProvider.responseInterceptors.push('httpInterceptor');
-
+	app.config(['$routeProvider', '$locationProvider',
+		function ($routeProvider) {
 			$routeProvider
 				.when('/', { controller: 'homeController', templateUrl: '/views/index.html', access: {restricted: false} })
 				.when('/home', { controller: 'homeController', templateUrl: '/views/index.html', access: {restricted: false} })
@@ -41,13 +38,11 @@ define(function (require) {
 				.when('/logout', { controller: 'logoutController', templateUrl: '/views/index.html', access: {restricted: false} })
 				.when('/loggedout', { controller: 'loggedoutController', templateUrl: '/views/index.html', access: {restricted: false} })
 				.when('/register', { controller: 'registerController', templateUrl: '/views/index.html', access: {restricted: false} })
-				.otherwise({redirectTo: '/'})
-
-			$locationProvider.html5Mode(true);
+				.otherwise({redirectTo: '/'});
 		}
 	]);
 
-	app.run(logRunner);
+	//app.run(runners);
 
 	app.run(function ($window, $rootScope, $location, $route, AuthService) {
 		//auth.setAuthorizationHeaders();

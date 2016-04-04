@@ -2,8 +2,8 @@
 
 define(function() {
 	return [
-		'core/services/auth.service',
-		'core/services/config.service',
-		'core/services/menu.service'
+		'../modules/core/services/auth.service',
+		'../modules/core/services/config.service',
+		'../modules/core/services/menu.service'
 	];
 });

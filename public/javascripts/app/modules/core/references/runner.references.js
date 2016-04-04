@@ -2,6 +2,6 @@
 
 define(function() {
 	return [
-		'core/runners/log.runner'
+		'../modules/core/runners/log.runner'
 	];
 });
