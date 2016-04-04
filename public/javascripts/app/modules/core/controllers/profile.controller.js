@@ -1,7 +1,6 @@
 
-define(function() {
-	angular
-		.module('coreModule')
+define (['./module'], function(controllers) {
+	controllers
 		.controller('profileController', ['$rootScope', '$scope', 'AuthService', function($rootScope, $scope, AuthService) {
 			$scope.title = 'profile.Node';
 

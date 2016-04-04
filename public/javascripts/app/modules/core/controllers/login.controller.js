@@ -1,7 +1,6 @@
 
-define(function() {
-	angular
-		.module('coreModule')
+define (['./module'], function(controllers) {
+	controllers
 		.controller('loginController',
 			['$rootScope', '$scope', '$location', 'AuthService',
 			function($rootScope, $scope, $location, AuthService) {

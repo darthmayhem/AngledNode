@@ -2,25 +2,24 @@
  * Created by Steve on 4/2/2016.
  */
 
-define(function() {
-    var menuLink = angular.module('menuModule', []);
+define (['./module'], function(directives) {
+    directives
+        .run(['$templateCache', '$log', function ($templateCache, $log) {
+            $templateCache.put('partials/menu-link.tmpl.html',
+                '<md-button ng-class="{\'{{section.icon}}\' : true}" \n' +
+                '  ui-sref-active="active" ui-sref="{{section.state}}" ng-click="focusSection()">\n' +
+                '  {{section | humanizeDoc}}\n' +
+                '  <span class="md-visually-hidden "\n' +
+                '    ng-if="isSelected()">\n' +
+                '    current page\n' +
+                '  </span>\n' +
+                '</md-button>\n' +
+                '');
 
-    menuLink.run(['$templateCache', '$log', function ($templateCache, $log) {
-        $templateCache.put('partials/menu-link.tmpl.html',
-            '<md-button ng-class="{\'{{section.icon}}\' : true}" \n' +
-            '  ui-sref-active="active" ui-sref="{{section.state}}" ng-click="focusSection()">\n' +
-            '  {{section | humanizeDoc}}\n' +
-            '  <span class="md-visually-hidden "\n' +
-            '    ng-if="isSelected()">\n' +
-            '    current page\n' +
-            '  </span>\n' +
-            '</md-button>\n' +
-            '');
+            $log.info('menulink.directive: initialized');
+        }])
 
-        $log.info('menulink.directive: initialized');
-    }]);
-
-    menuLink.directive('menuLink', function () {
+        .directive('menuLink', function () {
             return {
                 scope: {
                     section: '='

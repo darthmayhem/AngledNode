@@ -1,7 +1,6 @@
 
-define (function() {
-	angular
-		.module('coreModule')
+define (['./module'], function(controllers) {
+	controllers
 		.controller('mainController', ['$scope', 'ConfigService', 'AuthService', function($scope, ConfigService, AuthService) {
 			$scope.config = ConfigService.getConfig();
 			$scope.userProfile = AuthService.getUserProfile();

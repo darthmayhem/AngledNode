@@ -2,15 +2,9 @@
  * Created by Steve on 4/2/2016.
  */
 
-define(function() {
-    var menuModule = angular.module('menuModule',
-        [
-            //'menu_link.directive',
-            //'menu_toggle.directive'
-        ]
-    );
-
-    menuModule.factory('menu', [
+define (['./module'], function(services) {
+    services
+        .factory('menu', [
             '$location',
             '$rootScope',
             function ($location) {
@@ -89,9 +83,9 @@ define(function() {
                         (a.humanName > b.humanName) ? 1 : 0;
                 }
 
-            }]);
+            }])
 
-    menuModule.run(['$log', function($log) {
-        $log.info('menuModule: initialized');
-    }]);
+        .run(['$log', function($log) {
+            $log.info('menuModule: initialized');
+        }]);
 });
