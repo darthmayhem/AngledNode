@@ -15,6 +15,7 @@ define([
 
     return ang.module('app', [
         'ngRoute',
+        //'ngMaterial',
         'app.services',
         'app.controllers',
         //'app.filters',

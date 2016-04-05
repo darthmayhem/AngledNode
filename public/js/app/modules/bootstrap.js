@@ -8,9 +8,9 @@ define([
     'require',
     'angular',
     'angular-route',
+    //'angular-material',
     'app',
-    'routes',
-    'ui.bootstrap'
+    'routes'
 ], function (require, ang) {
     'use strict';
 

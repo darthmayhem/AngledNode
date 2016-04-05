@@ -21,7 +21,7 @@ define (['./module'], function(directives) {
                 '</ul>\n' +
                 '');
 
-            $log.info('menutoggle.directive: initialized');
+            $log.info('menu-toggle.directive: initialized');
         }])
 
         .directive('menuToggle', ['$timeout', function ($timeout ) {

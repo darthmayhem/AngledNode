@@ -16,7 +16,7 @@ define (['./module'], function(directives) {
                 '</md-button>\n' +
                 '');
 
-            $log.info('menulink.directive: initialized');
+            $log.info('menu-link.directive: initialized');
         }])
 
         .directive('menuLink', function () {

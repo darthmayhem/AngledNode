@@ -4,7 +4,7 @@
 
 define (['./module'], function(services) {
     services
-        .factory('menu', [
+        .factory('MenuService', [
             '$location',
             '$rootScope',
             function ($location) {
@@ -82,10 +82,10 @@ define (['./module'], function(services) {
                     return (a.humanName < b.humanName) ? -1 :
                         (a.humanName > b.humanName) ? 1 : 0;
                 }
-
-            }])
+            }
+        ])
 
         .run(['$log', function($log) {
-            $log.info('menuModule: initialized');
+            $log.info('menu.service: initialized');
         }]);
 });
