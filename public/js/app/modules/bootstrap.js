@@ -3,18 +3,19 @@
  *
  * bootstraps angular onto the window.document node
  */
-console.log('hi');
 
 define([
     'require',
     'angular',
     'angular-route',
     'app',
-    'routes'
+    'routes',
+    'ui.bootstrap'
 ], function (require, ang) {
     'use strict';
 
     require(['domReady!'], function (document) {
+    //require(function () {
         ang.bootstrap(document, ['app']);
     });
 });
